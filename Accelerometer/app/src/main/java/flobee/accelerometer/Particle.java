@@ -29,24 +29,24 @@ class Particle {
     final float invm = 1.0f / m;
     final float ax = gx * invm;
     final float ay = gy * invm;
-				/*
-				 * Time-corrected Verlet integration
-				 *
-				 * The position Verlet integrator is defined as
-				 *
-				 * x(t+Æt) = x(t) + x(t) - x(t-Æt) + a(t)Ætö2
-				 *
-				 * However, the above equation doesn't handle variable Æt very
-				 * well, a time-corrected version is needed:
-				 *
-				 * x(t+Æt) = x(t) + (x(t) - x(t-Æt)) * (Æt/Æt_prev) + a(t)Ætö2
-				 *
-				 *
-				 * We also add a simple friction term (f) to the equation:
-				 *
-				 * x(t+Æt) = x(t) + (1-f) * (x(t) - x(t-Æt)) * (Æt/Æt_prev) +
-				 * a(t)Ætö2
-				 */
+		/*
+		 * Time-corrected Verlet integration
+		 *
+		 * The position Verlet integrator is defined as
+		 *
+		 * x(t+Æt) = x(t) + x(t) - x(t-Æt) + a(t)Ætö2
+		 *
+		 * However, the above equation doesn't handle variable Æt very
+		 * well, a time-corrected version is needed:
+		 *
+		 * x(t+Æt) = x(t) + (x(t) - x(t-Æt)) * (Æt/Æt_prev) + a(t)Ætö2
+		 *
+		 *
+		 * We also add a simple friction term (f) to the equation:
+		 *
+		 * x(t+Æt) = x(t) + (1-f) * (x(t) - x(t-Æt)) * (Æt/Æt_prev) +
+		 * a(t)Ætö2
+		 */
     final float dTdT = dT * dT;
     final float x = mPosX + mOneMinusFriction * dTC
       * (mPosX - mLastPosX) + mAccelX * dTdT;
