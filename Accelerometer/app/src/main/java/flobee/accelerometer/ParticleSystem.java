@@ -6,21 +6,20 @@ package flobee.accelerometer;
 class ParticleSystem {
   static final int NUM_PARTICLES = 15;
   private Particle mBalls[] = new Particle[NUM_PARTICLES];
-  private long mLastT;
-  private float mLastDeltaT;
+  private long  mLastT;       // last time update() was called. update is called when new
+  private float mLastDeltaT;  // sensor events occur.
   private float ballDiameter;
-  private float ballDiameter2;
+  private float ballDiameter2; //diameter squared.
   private float horizBound;
   private float vertBound;
 
   ParticleSystem(float ballDiameter, float horizBound, float vertBound) {
-    this.ballDiameter = ballDiameter;
+    this.ballDiameter  = ballDiameter;
     this.ballDiameter2 = ballDiameter * ballDiameter;
-    this.horizBound = horizBound;
-    this.vertBound  = vertBound;
-		//Initially our particles have no speed or acceleration
+    this.horizBound    = horizBound;
+    this.vertBound     = vertBound;
     for (int i = 0; i < mBalls.length; i++) {
-      mBalls[i] = new Particle();
+      mBalls[i] = new Particle(); //initially particles have no speed or acceleration.
     }
   }
   /*
@@ -90,10 +89,7 @@ class ParticleSystem {
             more = true;
           }
         }
-				/*
-				 * Finally make sure the particle doesn't intersects
-				 * with the walls.
-				 */
+				//Finally make sure the particle doesn't intersects with the walls.
         resolveCollisionWithBounds(curr);
       }
     }

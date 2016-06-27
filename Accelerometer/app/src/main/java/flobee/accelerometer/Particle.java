@@ -31,27 +31,19 @@ class Particle {
     final float ay = gy * invm;
 		/*
 		 * Time-corrected Verlet integration
-		 *
 		 * The position Verlet integrator is defined as
-		 *
-		 * x(t+Æt) = x(t) + x(t) - x(t-Æt) + a(t)Ætö2
-		 *
-		 * However, the above equation doesn't handle variable Æt very
+		 * x(t+dt) = x(t) + x(t) - x(t-dt) + a(t)dt^2
+		 * However, the above equation doesn't handle variable dt very
 		 * well, a time-corrected version is needed:
-		 *
-		 * x(t+Æt) = x(t) + (x(t) - x(t-Æt)) * (Æt/Æt_prev) + a(t)Ætö2
-		 *
+		 * x(t+dt) = x(t) + (x(t) - x(t-dt)) * (dt/d_prev) + a(t)dt^2
 		 *
 		 * We also add a simple friction term (f) to the equation:
-		 *
-		 * x(t+Æt) = x(t) + (1-f) * (x(t) - x(t-Æt)) * (Æt/Æt_prev) +
-		 * a(t)Ætö2
+		 * x(t+dt) = x(t) + (1-f) * (x(t) - x(t-dt)) * (dt/dt_prev) +
+		 * a(t)dt^2
 		 */
     final float dTdT = dT * dT;
-    final float x = mPosX + mOneMinusFriction * dTC
-      * (mPosX - mLastPosX) + mAccelX * dTdT;
-    final float y = mPosY + mOneMinusFriction * dTC
-      * (mPosY - mLastPosY) + mAccelY * dTdT;
+    final float x = mPosX + mOneMinusFriction * dTC*(mPosX - mLastPosX) + mAccelX * dTdT;
+    final float y = mPosY + mOneMinusFriction * dTC*(mPosY - mLastPosY) + mAccelY * dTdT;
     mLastPosX = mPosX;
     mLastPosY = mPosY;
     mPosX = x;
