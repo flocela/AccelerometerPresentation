@@ -97,25 +97,20 @@ public class AccelerometerPlayActivity extends Activity {
   class SimulationView extends View implements SensorEventListener {
     // diameter of the balls in meters
     private static final float sBallDiameter = 0.004f;
-
-    private Sensor mAccelerometer;
-
-    private float mXDpi;
-    private float mYDpi;
-    private float mMetersToPixelsX;
-    private float mMetersToPixelsY;
-    private Bitmap mBitmap;
-    private Bitmap mWood;
-    private float mXOrigin;
-    private float mYOrigin;
-    private float mSensorX;
-    private float mSensorY;
-    private long mSensorTimeStamp;
-    private long mCpuTimeStamp;
-    private float mHorizontalBound;
-    private float mVerticalBound;
+    private Sensor  mAccelerometer;
+    private float   mPixelsPerMeterX;
+    private float   mPixelsPerMeterY;
+    private Bitmap  mBitmap;
+    private Bitmap  mWood;
+    private float   mXOrigin;
+    private float   mYOrigin;
+    private float   mSensorX;
+    private float   mSensorY;
+    private long    mSensorTimeStamp;
+    private long    mCpuTimeStamp;
+    private float   mHorizontalBound;
+    private float   mVerticalBound;
     private ParticleSystem mParticleSystem;
-
 
     public void startSimulation() {
 			/*
@@ -134,39 +129,29 @@ public class AccelerometerPlayActivity extends Activity {
 
     public SimulationView(Context context) {
       super(context);
-      mAccelerometer = mSensorManager
-        .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-      DisplayMetrics metrics = new DisplayMetrics();
-      getWindowManager().getDefaultDisplay().getMetrics(metrics);
-      mXDpi = metrics.xdpi;
-      mYDpi = metrics.ydpi;
-      mMetersToPixelsX = mXDpi / 0.0254f;
-      mMetersToPixelsY = mYDpi / 0.0254f;
-      // rescale the ball so it's about 0.5 cm on screen
-      Bitmap ball = BitmapFactory.decodeResource(getResources(),
-        R.drawable.ball);
-      final int dstWidth = (int) (sBallDiameter * mMetersToPixelsX + 0.5f);
-      final int dstHeight = (int) (sBallDiameter * mMetersToPixelsY + 0.5f);
-      mBitmap = Bitmap
-        .createScaledBitmap(ball, dstWidth, dstHeight, true);
-      Options opts = new Options();
-      opts.inDither = true;
-      opts.inPreferredConfig = Bitmap.Config.RGB_565;
-      mWood = BitmapFactory.decodeResource(getResources(),
-        R.drawable.wood, opts);
+      setPixelsPerMeterRatios();
+      setWoodBitmap();
+      scaleBallBitmap();
+      mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
+
+
     }
+
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
       // compute the origin of the screen relative to the origin of
       // the bitmap
       mXOrigin = (w - mBitmap.getWidth()) * 0.5f;
       mYOrigin = (h - mBitmap.getHeight()) * 0.5f;
-      mHorizontalBound = ((w / mMetersToPixelsX - sBallDiameter) * 0.5f);
-      mVerticalBound = ((h / mMetersToPixelsY - sBallDiameter) * 0.5f);
+      mHorizontalBound = ((w / mPixelsPerMeterX - sBallDiameter) * 0.5f);
+      mVerticalBound   = ((h / mPixelsPerMeterY - sBallDiameter) * 0.5f);
       if (null == mParticleSystem) {
-        mParticleSystem = new ParticleSystem(sBallDiameter, mHorizontalBound, mVerticalBound);
+        mParticleSystem =
+          new ParticleSystem(sBallDiameter, mHorizontalBound, mVerticalBound);
       }
     }
+
     @Override
     public void onSensorChanged(SensorEvent event) {
       if (event.sensor.getType() != Sensor.TYPE_ACCELEROMETER)
@@ -203,6 +188,7 @@ public class AccelerometerPlayActivity extends Activity {
       mSensorTimeStamp = event.timestamp;
       mCpuTimeStamp = System.nanoTime();
     }
+
     @Override
     protected void onDraw(Canvas canvas) {
 			//draw the background
@@ -217,8 +203,8 @@ public class AccelerometerPlayActivity extends Activity {
       particleSystem.update(sx, sy, now);
       final float xc = mXOrigin;
       final float yc = mYOrigin;
-      final float xs = mMetersToPixelsX;
-      final float ys = mMetersToPixelsY;
+      final float xs = mPixelsPerMeterX;
+      final float ys = mPixelsPerMeterY;
       final Bitmap bitmap = mBitmap;
       final int count = particleSystem.getParticleCount();
       for (int i = 0; i < count; i++) {
@@ -235,7 +221,29 @@ public class AccelerometerPlayActivity extends Activity {
       invalidate();
     }
     @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {}
+
+    private void setWoodBitmap () {
+      Options opts = new Options();
+      opts.inDither = true;
+      opts.inPreferredConfig = Bitmap.Config.RGB_565;
+      mWood = BitmapFactory.decodeResource(getResources(), R.drawable.wood, opts);
+    }
+
+    private void setPixelsPerMeterRatios() {
+      DisplayMetrics metrics = new DisplayMetrics();
+      getWindowManager().getDefaultDisplay().getMetrics(metrics);
+      mPixelsPerMeterX = metrics.xdpi / 0.0254f;
+      mPixelsPerMeterY = metrics.ydpi / 0.0254f;
+    }
+
+    private void scaleBallBitmap () {
+      Bitmap unscaledBall = BitmapFactory.decodeResource(getResources(),R.drawable.ball);
+      final int dstWidth  = (int) (sBallDiameter * mPixelsPerMeterX + 0.5f); //round up
+      final int dstHeight = (int) (sBallDiameter * mPixelsPerMeterY + 0.5f);
+      mBitmap = Bitmap.createScaledBitmap(unscaledBall, dstWidth, dstHeight, true);
     }
   }
+
+
 }

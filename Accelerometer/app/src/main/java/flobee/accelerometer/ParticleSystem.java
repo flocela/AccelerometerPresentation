@@ -54,12 +54,12 @@ class ParticleSystem {
     updatePositions(sx, sy, now);
     // We do no more than a limited number of iterations
     final int NUM_MAX_ITERATIONS = 10;
-				/*
-				 * Resolve collisions, each particle is tested against every
-				 * other particle for collision. If a collision is detected the
-				 * particle is moved away using a virtual spring of infinite
-				 * stiffness.
-				 */
+		/*
+		 * Resolve collisions, each particle is tested against every
+		 * other particle for collision. If a collision is detected the
+		 * particle is moved away using a virtual spring of infinite
+		 * stiffness.
+		 */
     boolean more = true;
     final int count = mBalls.length;
     for (int k = 0; k < NUM_MAX_ITERATIONS && more; k++) {
@@ -73,17 +73,16 @@ class ParticleSystem {
           float dd = dx * dx + dy * dy;
           // Check for collisions
           if (dd <= ballDiameter2) {
-								/*
-								 * add a little bit of entropy, after nothing is
-								 * perfect in the universe.
-								 */
+						/*
+						 * add a little bit of entropy, after nothing is
+						 * perfect in the universe. (That's the Math.random)
+						 */
             dx += ((float) Math.random() - 0.5f) * 0.0001f;
             dy += ((float) Math.random() - 0.5f) * 0.0001f;
             dd = dx * dx + dy * dy;
             // simulate the spring
             final float d = (float) Math.sqrt(dd);
-            final float c = (0.5f * (ballDiameter - d))
-              / d;
+            final float c = (0.5f * (ballDiameter - d))/ d;
             curr.setPosX(curr.getPosX() - (dx * c));
             curr.setPosY(curr.getPosY() - (dy * c));
             ball.setPosX(ball.getPosX() + (dx * c));
@@ -91,10 +90,10 @@ class ParticleSystem {
             more = true;
           }
         }
-						/*
-						 * Finally make sure the particle doesn't intersects
-						 * with the walls.
-						 */
+				/*
+				 * Finally make sure the particle doesn't intersects
+				 * with the walls.
+				 */
         resolveCollisionWithBounds(curr);
       }
     }
