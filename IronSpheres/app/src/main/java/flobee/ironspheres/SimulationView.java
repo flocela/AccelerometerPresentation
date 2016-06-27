@@ -74,6 +74,7 @@ public class SimulationView extends View {
         originYInPixels + sphere.getPosY() - sphereBitmapYOffset,
         null);
     }
+    ((MainActivity)getContext()).updateSystem();
   }
 
   private void setSphereDisplayWidth() {

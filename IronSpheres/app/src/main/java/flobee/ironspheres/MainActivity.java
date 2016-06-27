@@ -57,7 +57,7 @@ public class MainActivity extends Activity implements SensorEventListener {
     else {
       Log.i("ATAG", "no accelerometer available.");
     }
-    mThread = new Thread(new Runnable() {
+    /*mThread = new Thread(new Runnable() {
       public void run() {
         synchronized (this) {
           while (!mQuitting) {
@@ -77,11 +77,11 @@ public class MainActivity extends Activity implements SensorEventListener {
         }
 
       }
-    });
+    });*/
     simView.invalidate(); // makes SimulationView draw itself, see onDraw().
-    synchronized (this) {
+    /*synchronized (this) {
       mThread.start();
-    }
+    }*/
   }
 
   @Override
@@ -152,8 +152,8 @@ public class MainActivity extends Activity implements SensorEventListener {
   @Override
   public void onAccuracyChanged(Sensor sensor, int i) {}
 
-  private void updateSystem () {
-    Log.i("ATAG", "inside updateaSystem.");
+  public void updateSystem () {
+    Log.i("ATAG", "inside updateSystem.time: "+System.nanoTime());
     Sphere firstSphere = spheres.get(0);
     final long now = sensorTimeStamp + (System.nanoTime() - cpuTimeStamp);
     final float sx = sensorX;
