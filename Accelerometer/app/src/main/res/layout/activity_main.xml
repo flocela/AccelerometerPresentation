@@ -1,17 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:paddingBottom="@dimen/activity_vertical_margin"
-  android:paddingLeft="@dimen/activity_horizontal_margin"
-  android:paddingRight="@dimen/activity_horizontal_margin"
-  android:paddingTop="@dimen/activity_vertical_margin"
-  tools:context="flobee.accelerometer.AccelerometerPlayActivity">
-
-  <TextView
+  android:id="@+id/frame_layout"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:orientation="vertical"
+  tools:context=".AccelerometerSimpleActivity">
+  <LinearLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="Hello World!"/>
-</RelativeLayout>
+    android:orientation="horizontal">
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="event_x: "
+      android:textSize="24dp"/>
+    <TextView
+      android:id="@+id/event_x"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="24dp"/>
+  </LinearLayout>
+  <LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="event_y: "
+      android:textSize="24dp"/>
+    <TextView
+      android:id="@+id/event_y"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="24dp"/>
+  </LinearLayout>
+  <LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    >
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="high event_x: "
+      android:textSize="24dp"
+      android:textStyle="bold"/>
+    <TextView
+      android:id="@+id/high_event_x"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="24dp"
+      android:textStyle="bold"/>
+  </LinearLayout>
+  <LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="high event_y: "
+      android:textSize="24dp"
+      android:textStyle="bold"/>
+    <TextView
+      android:id="@+id/high_event_y"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="24dp"
+      android:textStyle="bold"/>
+  </LinearLayout>
+
+  <LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:id="@+id/screen_values"
+    android:visibility="invisible"
+    android:paddingTop="30dp">
+  <LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    >
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="screen_x: "
+      android:textSize="24dp"
+      android:textColor="#26e"/>
+    <TextView
+      android:id="@+id/screen_x"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="24dp"
+      android:textColor="#26e"/>
+  </LinearLayout>
+  <LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="screen_y: "
+      android:textSize="24dp"
+      android:textColor="#26e"/>
+    <TextView
+      android:id="@+id/screen_y"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="24dp"
+      android:textColor="#26e"/>
+  </LinearLayout>
+
+
+    <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="high_screen_x: "
+        android:textSize="24dp"
+        android:textColor="#26e"
+        android:textStyle="bold"/>
+      <TextView
+        android:id="@+id/high_screen_x"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24dp"
+        android:textColor="#26e"
+        android:textStyle="bold"/>
+    </LinearLayout>
+    <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="high_screen_y: "
+        android:textSize="24dp"
+        android:textColor="#26e"
+        android:textStyle="bold"/>
+      <TextView
+        android:id="@+id/high_screen_y"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24dp"
+        android:textColor="#26e"
+        android:textStyle="bold"/>
+    </LinearLayout>
+  </LinearLayout>
+
+  <Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="show screen values"
+    android:onClick="onShowScreenValues"/>
+</LinearLayout>

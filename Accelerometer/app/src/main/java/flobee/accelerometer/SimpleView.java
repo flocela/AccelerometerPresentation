@@ -7,14 +7,13 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Display;
 import android.view.Surface;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 
-class SimulationView extends View {
+class SimpleView extends View {
   // diameter of the balls in meters
   private static final float sBallDiameter = 0.004f;
 
@@ -33,26 +32,12 @@ class SimulationView extends View {
   private Display display;
   private ParticleSystem mParticleSystem;
 
-  public SimulationView(Context context) {
+  private TextView displayRotationTextView;
+
+  public SimpleView(Context context) {
     super(context);
     setDisplay(context);
-    setPixelsPerMeterRatios(context);
     setWoodBitmap();
-    scaleBallBitmap();
-  }
-
-  // Called when size of screen initialized and changes. Since
-  // always in portrait mode, called once before first onDraw call.
-  @Override
-  protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-    // mXOrigin is at the center of the screen.
-    mXOrigin = (w - mBitmap.getWidth()) * 0.5f;
-    mYOrigin = (h - mBitmap.getHeight()) * 0.5f;
-    mHorizontalEdge = ((w / mPixelsPerMeterX - sBallDiameter) * 0.5f);
-    mVerticalEdge = ((h / mPixelsPerMeterY - sBallDiameter) * 0.5f);
-    if (null == mParticleSystem) {
-      mParticleSystem = new ParticleSystem(sBallDiameter, mHorizontalEdge, mVerticalEdge);
-    }
   }
 
   public void onSensorChanged(SensorEvent event) {
@@ -70,6 +55,7 @@ class SimulationView extends View {
 		 *
 		 */
     switch (display.getRotation()) {
+
       case Surface.ROTATION_0:
         mSensorX = event.values[0];
         mSensorY = event.values[1];
@@ -94,31 +80,19 @@ class SimulationView extends View {
   @Override
   protected void onDraw(Canvas canvas) {
     canvas.drawBitmap(mWood, 0, 0, null); // draw wood background.
-    //compute the new position of our object, based on accelerometer
-    //data and present time.
-    final ParticleSystem particleSystem = mParticleSystem;
-    final long now = mSensorTimeStamp + (System.nanoTime() - mCpuTimeStamp);
     final float sx = mSensorX;
     final float sy = mSensorY;
-    particleSystem.update(sx, sy, now);
     final float xc = mXOrigin;
     final float yc = mYOrigin;
     final float xs = mPixelsPerMeterX;
     final float ys = mPixelsPerMeterY;
-    final Bitmap bitmap = mBitmap;
-    final int count = particleSystem.getParticleCount();
-    for (int i = 0; i < count; i++) {
-			/*
-			 * We transform the canvas so that the coordinate system matches
-			 * the sensors coordinate system with the origin in the center
-			 * of the screen and the unit is the meter.
-			 */
-      final float x = xc + particleSystem.getPosX(i) * xs;
-      final float y = yc - particleSystem.getPosY(i) * ys;
-      canvas.drawBitmap(bitmap, x, y, null);
-    }
     // and make sure to redraw asap
-    invalidate();
+    //invalidate();
+  }
+
+  private void setDisplay(Context context) {
+    display = ((WindowManager)context.getSystemService(Context.WINDOW_SERVICE)).
+      getDefaultDisplay();
   }
 
   private void setWoodBitmap () {
@@ -128,23 +102,4 @@ class SimulationView extends View {
     mWood = BitmapFactory.decodeResource(getResources(), R.drawable.wood, opts);
   }
 
-  private void setDisplay(Context context) {
-    display = ((WindowManager)context.getSystemService(Context.WINDOW_SERVICE)).
-      getDefaultDisplay();
-  }
-  private void setPixelsPerMeterRatios(Context context) {
-    DisplayMetrics metrics = new DisplayMetrics();
-    display.getMetrics(metrics);
-    mPixelsPerMeterX = metrics.xdpi / 0.0254f;
-    mPixelsPerMeterY = metrics.ydpi / 0.0254f;
-    Log.i("ATAG", "mPixelsPerMeterX: " + mPixelsPerMeterX);
-    Log.i("ATAG", "mPixelsPerMeterY: " + mPixelsPerMeterY);
-  }
-
-  private void scaleBallBitmap () {
-    Bitmap unscaledBall = BitmapFactory.decodeResource(getResources(),R.drawable.ball);
-    final int dstWidth  = (int) (sBallDiameter * mPixelsPerMeterX + 0.5f); //round up
-    final int dstHeight = (int) (sBallDiameter * mPixelsPerMeterY + 0.5f);
-    mBitmap = Bitmap.createScaledBitmap(unscaledBall, dstWidth, dstHeight, true);
-  }
 }

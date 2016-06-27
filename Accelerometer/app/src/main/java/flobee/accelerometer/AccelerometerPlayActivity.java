@@ -24,6 +24,7 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+
 /**
  * This is an example of using the accelerometer to integrate the device's
  * acceleration to a position using the Verlet method. This is illustrated with
@@ -74,8 +75,7 @@ public class AccelerometerPlayActivity extends Activity implements SensorEventLi
     mWakeLock.release();
   }
 
-  @Override
-  public void onSensorChanged (SensorEvent event) {
+  public void onSensorChanged(SensorEvent event) {
     mSimulationView.onSensorChanged(event);
   }
 
