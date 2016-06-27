@@ -70,8 +70,8 @@ public class SimulationView extends View {
     canvas.drawBitmap(woodBitmap, 0, 0, null);
     for (Sphere sphere: spheres) {
       canvas.drawBitmap(sphereBitmap,
-        originXInPixels - sphereBitmapXOffset,
-        originYInPixels - sphereBitmapYOffset,
+        originXInPixels + sphere.getPosX() - sphereBitmapXOffset,
+        originYInPixels + sphere.getPosY() - sphereBitmapYOffset,
         null);
     }
   }
