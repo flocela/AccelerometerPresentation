@@ -12,6 +12,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
     <TextView
+      android:id="@+id/eventx_label"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:text="event_x: "
@@ -27,6 +28,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
     <TextView
+      android:id="@+id/eventy_label"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:text="event_y: "
@@ -43,6 +45,7 @@
     android:orientation="horizontal"
     >
     <TextView
+      android:id="@+id/higheventx_label"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:text="high event_x: "
@@ -60,6 +63,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
     <TextView
+      android:id="@+id/higheventy_label"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:text="high event_y: "
@@ -78,7 +82,6 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:id="@+id/screen_values"
-    android:visibility="invisible"
     android:paddingTop="30dp">
   <LinearLayout
     android:layout_width="wrap_content"
@@ -86,6 +89,7 @@
     android:orientation="horizontal"
     >
     <TextView
+      android:id="@+id/screen_x_label"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:text="screen_x: "
@@ -103,6 +107,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
     <TextView
+      android:id="@+id/screen_y_label"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:text="screen_y: "
@@ -124,6 +129,7 @@
       <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/highscreen_x_label"
         android:text="high_screen_x: "
         android:textSize="24dp"
         android:textColor="#26e"
@@ -143,7 +149,8 @@
       <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="high_screen_y: "
+        android:id="@+id/highscreen_y_label"
+        android:text="high_screen_label_y: "
         android:textSize="24dp"
         android:textColor="#26e"
         android:textStyle="bold"/>

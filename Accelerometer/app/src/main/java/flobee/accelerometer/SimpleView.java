@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
+import android.util.Log;
 import android.view.Display;
 import android.view.Surface;
 import android.view.View;
@@ -57,18 +58,22 @@ class SimpleView extends View {
     switch (display.getRotation()) {
 
       case Surface.ROTATION_0:
+        Log.i("ATAG", "ROTATION_0)");
         mSensorX = event.values[0];
         mSensorY = event.values[1];
         break;
       case Surface.ROTATION_90:
+        Log.i("ATAG", "ROTATION_90)");
         mSensorX = -event.values[1];
         mSensorY =  event.values[0];
         break;
       case Surface.ROTATION_180:
+        Log.i("ATAG", "ROTATION_180)");
         mSensorX = -event.values[0];
         mSensorY = -event.values[1];
         break;
       case Surface.ROTATION_270:
+        Log.i("ATAG", "ROTATION_270)");
         mSensorX =  event.values[1];
         mSensorY = -event.values[0];
         break;

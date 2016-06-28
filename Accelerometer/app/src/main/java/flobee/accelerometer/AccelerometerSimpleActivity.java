@@ -25,6 +25,7 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+import android.util.Log;
 import android.view.Display;
 import android.view.Surface;
 import android.view.View;
@@ -115,18 +116,22 @@ public class AccelerometerSimpleActivity extends Activity implements SensorEvent
     Float userY = 0f;
     switch (display.getRotation()) {
       case Surface.ROTATION_0:
+        Log.i("ATAG", "ROTATION_0)");
         userX = xEvent;
         userY = yEvent;
         break;
       case Surface.ROTATION_90:
+        Log.i("ATAG", "ROTATION_90)");
         userX = -yEvent;
         userY =  xEvent;
         break;
       case Surface.ROTATION_180:
+        Log.i("ATAG", "ROTATION_180)");
         userX = -xEvent;
         userY = -yEvent;
         break;
       case Surface.ROTATION_270:
+        Log.i("ATAG", "ROTATION_270)");
         userX =  yEvent;
         userY = -xEvent;
         break;
@@ -153,7 +158,6 @@ public class AccelerometerSimpleActivity extends Activity implements SensorEvent
       screenValues.setVisibility(View.VISIBLE);
     }
   }
-
 
   @Override
   public void onAccuracyChanged(Sensor sensor, int accuracy) {}
