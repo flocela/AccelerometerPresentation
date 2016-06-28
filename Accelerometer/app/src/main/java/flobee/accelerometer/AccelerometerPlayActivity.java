@@ -47,8 +47,8 @@ public class AccelerometerPlayActivity extends Activity implements SensorEventLi
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-    //mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-    // if (mAccelerometer == null) finish;
+    mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+     if (mAccelerometer == null) finish();
     mPowerManager = (PowerManager) getSystemService(POWER_SERVICE);
     mWakeLock = mPowerManager.newWakeLock(
       PowerManager.SCREEN_BRIGHT_WAKE_LOCK, getClass().getName());
@@ -72,7 +72,7 @@ public class AccelerometerPlayActivity extends Activity implements SensorEventLi
   @Override
   protected void onPause() {
     super.onPause();
-    //mSensorManager.unregisterListener(this);
+    mSensorManager.unregisterListener(this);
     mWakeLock.release();
   }
 

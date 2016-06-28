@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Display;
 import android.view.Surface;
 import android.view.View;
+import android.view.WindowManager;
 
 class SimulationView extends View {
   // diameter of the balls in meters
@@ -45,6 +46,13 @@ class SimulationView extends View {
   @Override
   protected void onSizeChanged(int w, int h, int oldw, int oldh) {
     // mXOrigin is at the center of the screen.
+    mXOrigin = (w-ballBitmap.getWidth()) * 0.5f;
+    mYOrigin = (h-ballBitmap.getHeight()) * 0.5f;
+    mHorizontalEdge = ((w / mPixelsPerMeterX - sBallDiameter) * 0.5f);
+    mVerticalEdge = ((h / mPixelsPerMeterY - sBallDiameter) * 0.5f);
+    if (null == mParticleSystem) {
+      mParticleSystem = new ParticleSystem(sBallDiameter, mHorizontalEdge, mVerticalEdge);
+    }
   }
 
   public void onSensorChanged(SensorEvent event) {
@@ -85,6 +93,8 @@ class SimulationView extends View {
         displayYAcc = -event.values[0];
         break;
     }
+    mSensorTimeStamp = event.timestamp;
+    mCpuTimeStamp = System.nanoTime();
   }
 
   @Override
@@ -92,18 +102,24 @@ class SimulationView extends View {
     canvas.drawBitmap(mWood, 0, 0, null); // draw wood background.
     //compute the new position of our object, based on accelerometer
     //data and present time.
-    //final ParticleSystem particleSystem = mParticleSystem;
-    //final long now = mSensorTimeStamp + (System.nanoTime() - mCpuTimeStamp);
-    //final float sx = displayXAcc;
-    //final float sy = displayYAcc;
-    //particleSystem.update(sx, sy, now);
+    final ParticleSystem particleSystem = mParticleSystem;
+    final long now = mSensorTimeStamp + (System.nanoTime() - mCpuTimeStamp);
+    final float sx = displayXAcc;
+    final float sy = displayYAcc;
+    particleSystem.update(sx, sy, now);
     final float xc = mXOrigin;
     final float yc = mYOrigin;
     final float xs = mPixelsPerMeterX;
     final float ys = mPixelsPerMeterY;
-
+    final Bitmap bitmap = ballBitmap;
+    final int count = particleSystem.getParticleCount();
+    for (int i=0; i<count; i++) {
+      final float x = xc + particleSystem.getPosX(i) * xs;
+      final float y = yc - particleSystem.getPosY(i) * ys;
+      canvas.drawBitmap(bitmap, x, y, null);
+    }
     // and make sure to redraw asap
-
+    invalidate();
   }
 
   private void setWoodBitmap () {
@@ -114,7 +130,8 @@ class SimulationView extends View {
   }
 
   private void setDisplay(Context context) {
-
+    display = ((WindowManager)context.
+      getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
   }
   private void setPixelsPerMeterRatios() {
     DisplayMetrics metrics = new DisplayMetrics();
@@ -124,9 +141,9 @@ class SimulationView extends View {
   }
 
   private void scaleBallBitmap () {
-    //Bitmap unscaledBall = BitmapFactory.decodeResource(getResources(),R.drawable.ball);
-    //final int dstWidth  = (int) (sBallDiameter * mPixelsPerMeterX + 0.5f); //round up
-    //final int dstHeight = (int) (sBallDiameter * mPixelsPerMeterY + 0.5f);
-    //ballBitmap = Bitmap.createScaledBitmap(unscaledBall, dstWidth, dstHeight, true);
+    Bitmap unscaledBall = BitmapFactory.decodeResource(getResources(),R.drawable.ball);
+    final int dstWidth  = (int) (sBallDiameter * mPixelsPerMeterX + 0.5f); //round up
+    final int dstHeight = (int) (sBallDiameter * mPixelsPerMeterY + 0.5f);
+    ballBitmap = Bitmap.createScaledBitmap(unscaledBall, dstWidth, dstHeight, true);
   }
 }

@@ -29,8 +29,7 @@ class ParticleSystem {
   private void updatePositions(float sx, float sy, long timestamp) {
     final long t = timestamp;
     if (mLastT != 0) {
-      final float dT = (float) (t - mLastT)
-        * (1.0f / 1000000000.0f);
+      final float dT = (float) (t - mLastT)* (1.0f / 1000000000.0f);
       if (mLastDeltaT != 0) {
         final float dTC = dT / mLastDeltaT;
         final int count = mBalls.length;
@@ -81,7 +80,7 @@ class ParticleSystem {
             dd = dx * dx + dy * dy;
             // simulate the spring
             final float d = (float) Math.sqrt(dd);
-            final float c = (0.5f * (ballDiameter - d))/ d;
+            final float c = (0.5f * (ballDiameter - d)) / d;
             curr.setPosX(curr.getPosX() - (dx * c));
             curr.setPosY(curr.getPosY() - (dy * c));
             ball.setPosX(ball.getPosX() + (dx * c));
@@ -89,7 +88,7 @@ class ParticleSystem {
             more = true;
           }
         }
-				//Finally make sure the particle doesn't intersects with the walls.
+        //Finally make sure the particle doesn't intersects with the walls.
         resolveCollisionWithBounds(curr);
       }
     }

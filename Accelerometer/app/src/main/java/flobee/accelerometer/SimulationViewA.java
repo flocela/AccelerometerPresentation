@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.Surface;
@@ -97,13 +96,14 @@ class SimulationViewA extends View {
     //final float sx = displayXAcc;
     //final float sy = displayYAcc;
     //particleSystem.update(sx, sy, now);
-    final float xc = mXOrigin;
-    final float yc = mYOrigin;
-    final float xs = mPixelsPerMeterX;
-    final float ys = mPixelsPerMeterY;
-
+    //final float xc = mXOrigin;
+    //final float yc = mYOrigin;
+    //final float xs = mPixelsPerMeterX;
+    //final float ys = mPixelsPerMeterY;
+    canvas.drawBitmap(ballBitmap, mXOrigin-100, mYOrigin+100, null);
+    canvas.drawBitmap(ballBitmap, mXOrigin-50, mYOrigin+50, null);
+    canvas.drawBitmap(ballBitmap, mXOrigin-0, mYOrigin+0, null);
     // and make sure to redraw asap
-
   }
 
   private void setWoodBitmap () {
@@ -114,13 +114,12 @@ class SimulationViewA extends View {
   }
 
   private void setDisplay(Context context) {
-
   }
   private void setPixelsPerMeterRatios() {
-    DisplayMetrics metrics = new DisplayMetrics();
-    display.getMetrics(metrics);
-    mPixelsPerMeterX = metrics.xdpi / 0.0254f;
-    mPixelsPerMeterY = metrics.ydpi / 0.0254f;
+    //DisplayMetrics metrics = new DisplayMetrics();
+    //display.getMetrics(metrics);
+    //mPixelsPerMeterX = metrics.xdpi / 0.0254f;
+    //mPixelsPerMeterY = metrics.ydpi / 0.0254f;
   }
 
   private void scaleBallBitmap () {
