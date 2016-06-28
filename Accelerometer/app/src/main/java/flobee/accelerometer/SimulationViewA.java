@@ -13,7 +13,7 @@ import android.view.Display;
 import android.view.Surface;
 import android.view.View;
 
-class SimulationView extends View {
+class SimulationViewA extends View {
   // diameter of the balls in meters
   private static final float sBallDiameter = 0.004f;
 
@@ -32,7 +32,7 @@ class SimulationView extends View {
   private Display display;
   private ParticleSystem mParticleSystem;
 
-  public SimulationView(Context context) {
+  public SimulationViewA(Context context) {
     super(context);
     setDisplay(context);
     setPixelsPerMeterRatios();
