@@ -12,6 +12,7 @@ import android.view.Display;
 import android.view.Surface;
 import android.view.View;
 
+import flobee.accelerometer.ParticleSystem;
 import flobee.accelerometer.R;
 
 public class SimulationViewA extends View {

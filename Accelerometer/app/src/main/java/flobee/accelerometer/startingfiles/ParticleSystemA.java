@@ -1,5 +1,7 @@
 package flobee.accelerometer.startingfiles;
 
+import flobee.accelerometer.Particle;
+
 /*
  * A particle system is just a collection of particles
  */
