@@ -1,4 +1,4 @@
-package flobee.accelerometer;
+package flobee.accelerometer.startingfiles;
 
 
 import android.content.Context;
@@ -12,10 +12,11 @@ import android.view.Display;
 import android.view.Surface;
 import android.view.View;
 
-class SimulationViewA extends View {
+import flobee.accelerometer.R;
+
+public class SimulationViewA extends View {
   // diameter of the balls in meters
   private static final float sBallDiameter = 0.004f;
-
   private float  mPixelsPerMeterX; //conversion ratios
   private float  mPixelsPerMeterY;
   private Bitmap ballBitmap;

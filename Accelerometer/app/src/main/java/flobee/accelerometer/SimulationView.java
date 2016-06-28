@@ -7,17 +7,13 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Display;
 import android.view.Surface;
 import android.view.View;
-import android.view.WindowManager;
 
-class SimulationView extends View {
+public class SimulationView extends View {
   // diameter of the balls in meters
   private static final float sBallDiameter = 0.004f;
-
   private float  mPixelsPerMeterX; //conversion ratios
   private float  mPixelsPerMeterY;
   private Bitmap ballBitmap;
@@ -46,13 +42,6 @@ class SimulationView extends View {
   @Override
   protected void onSizeChanged(int w, int h, int oldw, int oldh) {
     // mXOrigin is at the center of the screen.
-    mXOrigin = (w-ballBitmap.getWidth()) * 0.5f;
-    mYOrigin = (h-ballBitmap.getHeight()) * 0.5f;
-    mHorizontalEdge = ((w / mPixelsPerMeterX - sBallDiameter) * 0.5f);
-    mVerticalEdge = ((h / mPixelsPerMeterY - sBallDiameter) * 0.5f);
-    if (null == mParticleSystem) {
-      mParticleSystem = new ParticleSystem(sBallDiameter, mHorizontalEdge, mVerticalEdge);
-    }
   }
 
   public void onSensorChanged(SensorEvent event) {
@@ -73,28 +62,22 @@ class SimulationView extends View {
     displayYAcc = 0;
     switch (display.getRotation()) {
       case Surface.ROTATION_0:
-        Log.i("ATAG", "ROTATION_0)");
         displayXAcc = event.values[0];
         displayYAcc = event.values[1];
         break;
       case Surface.ROTATION_90:
-        Log.i("ATAG", "ROTATION_90)");
         displayXAcc = -event.values[1];
         displayYAcc =  event.values[0];
         break;
       case Surface.ROTATION_180:
-        Log.i("ATAG", "ROTATION_180)");
         displayXAcc = -event.values[0];
         displayYAcc = -event.values[1];
         break;
       case Surface.ROTATION_270:
-        Log.i("ATAG", "ROTATION_270)");
         displayXAcc =  event.values[1];
         displayYAcc = -event.values[0];
         break;
     }
-    mSensorTimeStamp = event.timestamp;
-    mCpuTimeStamp = System.nanoTime();
   }
 
   @Override
@@ -102,24 +85,19 @@ class SimulationView extends View {
     canvas.drawBitmap(mWood, 0, 0, null); // draw wood background.
     //compute the new position of our object, based on accelerometer
     //data and present time.
-    final ParticleSystem particleSystem = mParticleSystem;
-    final long now = mSensorTimeStamp + (System.nanoTime() - mCpuTimeStamp);
-    final float sx = displayXAcc;
-    final float sy = displayYAcc;
-    particleSystem.update(sx, sy, now);
-    final float xc = mXOrigin;
-    final float yc = mYOrigin;
-    final float xs = mPixelsPerMeterX;
-    final float ys = mPixelsPerMeterY;
-    final Bitmap bitmap = ballBitmap;
-    final int count = particleSystem.getParticleCount();
-    for (int i=0; i<count; i++) {
-      final float x = xc + particleSystem.getPosX(i) * xs;
-      final float y = yc - particleSystem.getPosY(i) * ys;
-      canvas.drawBitmap(bitmap, x, y, null);
-    }
+    //final ParticleSystem particleSystem = mParticleSystem;
+    //final long now = mSensorTimeStamp + (System.nanoTime() - mCpuTimeStamp);
+    //final float sx = displayXAcc;
+    //final float sy = displayYAcc;
+    //particleSystem.update(sx, sy, now);
+    //final float xc = mXOrigin;
+    //final float yc = mYOrigin;
+    //final float xs = mPixelsPerMeterX;
+    //final float ys = mPixelsPerMeterY;
+    canvas.drawBitmap(ballBitmap, mXOrigin-100, mYOrigin+100, null);
+    canvas.drawBitmap(ballBitmap, mXOrigin-50, mYOrigin+50, null);
+    canvas.drawBitmap(ballBitmap, mXOrigin-0, mYOrigin+0, null);
     // and make sure to redraw asap
-    invalidate();
   }
 
   private void setWoodBitmap () {
@@ -130,20 +108,18 @@ class SimulationView extends View {
   }
 
   private void setDisplay(Context context) {
-    display = ((WindowManager)context.
-      getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
   }
   private void setPixelsPerMeterRatios() {
-    DisplayMetrics metrics = new DisplayMetrics();
-    display.getMetrics(metrics);
-    mPixelsPerMeterX = metrics.xdpi / 0.0254f;
-    mPixelsPerMeterY = metrics.ydpi / 0.0254f;
+    //DisplayMetrics metrics = new DisplayMetrics();
+    //display.getMetrics(metrics);
+    //mPixelsPerMeterX = metrics.xdpi / 0.0254f;
+    //mPixelsPerMeterY = metrics.ydpi / 0.0254f;
   }
 
   private void scaleBallBitmap () {
-    Bitmap unscaledBall = BitmapFactory.decodeResource(getResources(),R.drawable.ball);
-    final int dstWidth  = (int) (sBallDiameter * mPixelsPerMeterX + 0.5f); //round up
-    final int dstHeight = (int) (sBallDiameter * mPixelsPerMeterY + 0.5f);
-    ballBitmap = Bitmap.createScaledBitmap(unscaledBall, dstWidth, dstHeight, true);
+    //Bitmap unscaledBall = BitmapFactory.decodeResource(getResources(),R.drawable.ball);
+    //final int dstWidth  = (int) (sBallDiameter * mPixelsPerMeterX + 0.5f); //round up
+    //final int dstHeight = (int) (sBallDiameter * mPixelsPerMeterY + 0.5f);
+    //ballBitmap = Bitmap.createScaledBitmap(unscaledBall, dstWidth, dstHeight, true);
   }
 }

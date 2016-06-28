@@ -1,9 +1,9 @@
-package flobee.accelerometer;
+package flobee.accelerometer.startingfiles;
 
 /*
  * A particle system is just a collection of particles
  */
-public class ParticleSystem {
+public class ParticleSystemA {
   static final int NUM_PARTICLES = 1;
   private Particle mBalls[] = new Particle[NUM_PARTICLES];
   private long  mLastT;       // last time update() was called. update is called when new
@@ -13,7 +13,7 @@ public class ParticleSystem {
   //private float horizBound;
   //private float vertBound;
 
-  ParticleSystem(float ballDiameter, float horizBound, float vertBound) {
+  ParticleSystemA(float ballDiameter, float horizBound, float vertBound) {
     //this.ballDiameter  = ballDiameter;
     //this.ballDiameter2 = ballDiameter * ballDiameter;
     //this.horizBound    = horizBound;

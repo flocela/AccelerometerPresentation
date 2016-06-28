@@ -52,7 +52,7 @@ public class AccelerometerPlayActivity extends Activity implements SensorEventLi
     mPowerManager = (PowerManager) getSystemService(POWER_SERVICE);
     mWakeLock = mPowerManager.newWakeLock(
       PowerManager.SCREEN_BRIGHT_WAKE_LOCK, getClass().getName());
-    //Instantiate our simulation view and set it as the activity's content
+
     mSimulationView = new SimulationView(this);
     setContentView(mSimulationView);
   }

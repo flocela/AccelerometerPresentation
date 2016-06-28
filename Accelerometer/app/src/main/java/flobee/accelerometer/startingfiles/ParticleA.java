@@ -1,6 +1,6 @@
-package flobee.accelerometer;
+package flobee.accelerometer.startingfiles;
 
-public class Particle {
+public class ParticleA {
   private float mPosX;
   private float mPosY;
   private float mAccelX;
@@ -10,7 +10,7 @@ public class Particle {
   private float mOneMinusFriction;
   private static final float sFriction = 0.1f;
 
-  Particle() {
+  ParticleA() {
     final float r = ((float) Math.random() - 0.5f) * 0.2f;
     mOneMinusFriction = 1.0f - sFriction + r;
   }
