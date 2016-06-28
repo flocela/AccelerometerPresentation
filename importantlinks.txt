@@ -1,0 +1,23 @@
+Reference Links for tonight's Accelerometer Talk.
+
+Original Sample App from Google, AccelerometerPlayActivity.java:
+http://tool.oschina.net/uploads/apidocs/android/resources/samples/AccelerometerPlay/src/com/example/android/accelerometerplay/AccelerometerPlayActivity.html
+
+Explanation of Display vs Hardware Coordinates:
+http://android-developers.blogspot.com/2010/09/one-screen-turn-deserves-another.html
+
+Good Example:
+http://www.developer.com/ws/android/how-to-build-mobile-apps-with-android-sensors.html
+
+Physics Behind Accelerometer:
+http://www.instructables.com/id/Accelerometer-Gyro-Tutorial/
+https://www.youtube.com/watch?v=Mw5AcDylY2E
+
+Google Documentation:
+https://stuff.mit.edu/afs/sipb/project/android/docs/guide/topics/sensors/sensors_motion.html
+
+https://source.android.com/devices/sensors/
+
+https://developer.android.com/reference/android/hardware/SensorEvent.html
+
+https://developer.android.com/guide/topics/sensors/sensors_overview.html
