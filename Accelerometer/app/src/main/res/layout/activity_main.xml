@@ -2,8 +2,7 @@
 <LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
-  android:id="@+id/frame_layout"
-  android:layout_width="wrap_content"
+  android:layout_width="match_parent"
   android:layout_height="wrap_content"
   android:orientation="vertical"
   tools:context=".AccelerometerSimpleActivity">
@@ -16,12 +15,14 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:text="event_x: "
-      android:textSize="24dp"/>
+      android:textSize="24dp"
+      android:textColor="#000"/>
     <TextView
       android:id="@+id/event_x"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:textSize="24dp"/>
+      android:textSize="24dp"
+      android:textColor="#000"/>
   </LinearLayout>
   <LinearLayout
     android:layout_width="wrap_content"
@@ -32,114 +33,75 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:text="event_y: "
-      android:textSize="24dp"/>
+      android:textSize="24dp"
+      android:textColor="#000"/>
     <TextView
       android:id="@+id/event_y"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:textSize="24dp"/>
+      android:textSize="24dp"
+      android:textColor="#000"/>
   </LinearLayout>
   <LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    >
-    <TextView
-      android:id="@+id/higheventx_label"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="high event_x: "
-      android:textSize="24dp"
-      android:textStyle="bold"/>
-    <TextView
-      android:id="@+id/high_event_x"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:textSize="24dp"
-      android:textStyle="bold"/>
-  </LinearLayout>
-  <LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
-    <TextView
-      android:id="@+id/higheventy_label"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="high event_y: "
-      android:textSize="24dp"
-      android:textStyle="bold"/>
-    <TextView
-      android:id="@+id/high_event_y"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:textSize="24dp"
-      android:textStyle="bold"/>
-  </LinearLayout>
-
-  <LinearLayout
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:id="@+id/screen_values"
-    android:paddingTop="30dp">
-  <LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    >
-    <TextView
-      android:id="@+id/screen_x_label"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="screen_x: "
-      android:textSize="24dp"
-      android:textColor="#26e"/>
-    <TextView
-      android:id="@+id/screen_x"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:textSize="24dp"
-      android:textColor="#26e"/>
-  </LinearLayout>
-  <LinearLayout
-    android:layout_width="wrap_content"
+    android:id="@+id/edgeevent">
+    <LinearLayout
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
-    <TextView
-      android:id="@+id/screen_y_label"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="screen_y: "
-      android:textSize="24dp"
-      android:textColor="#26e"/>
-    <TextView
-      android:id="@+id/screen_y"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:textSize="24dp"
-      android:textColor="#26e"/>
-  </LinearLayout>
-
-
+      <TextView
+        android:id="@+id/higheventx_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="high event_x: "
+        android:textSize="24dp"
+        android:textStyle="bold"/>
+      <TextView
+        android:id="@+id/high_event_x"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24dp"
+        android:textStyle="bold"/>
+    </LinearLayout>
     <LinearLayout
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:orientation="horizontal">
+      android:orientation="horizontal"
+      android:id="@+id/lowevent">
       <TextView
+        android:id="@+id/higheventy_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/highscreen_x_label"
-        android:text="high_screen_x: "
+        android:text="high event_y: "
         android:textSize="24dp"
-        android:textColor="#26e"
         android:textStyle="bold"/>
       <TextView
-        android:id="@+id/high_screen_x"
+        android:id="@+id/high_event_y"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="24dp"
-        android:textColor="#26e"
+        android:textStyle="bold"/>
+    </LinearLayout>
+    <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:paddingTop="20dp"
+      >
+      <TextView
+        android:id="@+id/loweventx_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="low event_x: "
+        android:textSize="24dp"
+        android:textStyle="bold"/>
+      <TextView
+        android:id="@+id/low_event_x"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24dp"
         android:textStyle="bold"/>
     </LinearLayout>
     <LinearLayout
@@ -147,26 +109,155 @@
       android:layout_height="wrap_content"
       android:orientation="horizontal">
       <TextView
+        android:id="@+id/loweventy_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/highscreen_y_label"
-        android:text="high_screen_label_y: "
+        android:text="low event_y: "
         android:textSize="24dp"
-        android:textColor="#26e"
         android:textStyle="bold"/>
       <TextView
-        android:id="@+id/high_screen_y"
+        android:id="@+id/low_event_y"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="24dp"
-        android:textColor="#26e"
         android:textStyle="bold"/>
+    </LinearLayout>
+  </LinearLayout>
+
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:id="@+id/screen_values">
+    <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+      <TextView
+        android:id="@+id/screen_x_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="display_x: "
+        android:textSize="24dp"
+        android:textColor="#26e"/>
+      <TextView
+        android:id="@+id/screen_x"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24dp"
+        android:textColor="#26e"/>
+    </LinearLayout>
+    <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+      <TextView
+        android:id="@+id/screen_y_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="display_y: "
+        android:textSize="24dp"
+        android:textColor="#26e"/>
+      <TextView
+        android:id="@+id/screen_y"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24dp"
+        android:textColor="#26e"/>
+    </LinearLayout>
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:id="@+id/highscreen_x_label"
+          android:text="high_display_x: "
+          android:textSize="24dp"
+          android:textColor="#26e"
+          android:textStyle="bold"/>
+        <TextView
+          android:id="@+id/high_screen_x"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textSize="24dp"
+          android:textColor="#26e"
+          android:textStyle="bold"/>
+      </LinearLayout>
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:id="@+id/highscreen_y_label"
+          android:text="high_display_y: "
+          android:textSize="24dp"
+          android:textColor="#26e"
+          android:textStyle="bold"/>
+        <TextView
+          android:id="@+id/high_screen_y"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textSize="24dp"
+          android:textColor="#26e"
+          android:textStyle="bold"/>
+      </LinearLayout>
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="20dp">
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:id="@+id/lowscreen_x_label"
+          android:text="low_display_x: "
+          android:textSize="24dp"
+          android:textColor="#26e"
+          android:textStyle="bold"/>
+        <TextView
+          android:id="@+id/low_screen_x"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textSize="24dp"
+          android:textColor="#26e"
+          android:textStyle="bold"/>
+      </LinearLayout>
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:id="@+id/lowscreen_y_label"
+          android:text="low_display_y: "
+          android:textSize="24dp"
+          android:textColor="#26e"
+          android:textStyle="bold"/>
+        <TextView
+          android:id="@+id/low_screen_y"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textSize="24dp"
+          android:textColor="#26e"
+          android:textStyle="bold"/>
+      </LinearLayout>
     </LinearLayout>
   </LinearLayout>
 
   <Button
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="show screen values"
+    android:text="show display values"
     android:onClick="onShowScreenValues"/>
 </LinearLayout>

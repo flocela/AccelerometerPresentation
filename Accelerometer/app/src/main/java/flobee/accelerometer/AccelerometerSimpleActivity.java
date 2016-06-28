@@ -25,7 +25,6 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
-import android.util.Log;
 import android.view.Display;
 import android.view.Surface;
 import android.view.View;
@@ -44,8 +43,6 @@ import android.widget.TextView;
  * @see Sensor
  */
 public class AccelerometerSimpleActivity extends Activity implements SensorEventListener {
-  private SimpleView simpleView;
-  //private SimulationView mSimulationView;
   private PowerManager   mPowerManager;
   private WakeLock       mWakeLock;
   private SensorManager  mSensorManager;
@@ -53,8 +50,12 @@ public class AccelerometerSimpleActivity extends Activity implements SensorEvent
   private Display        display;
   private float          highXEvent;
   private float          highYEvent;
-  private float          highScreenX;
-  private float          highScreenY;
+  private float          lowXEvent;
+  private float          lowYEvent;
+  private float          highDisplayX;
+  private float          highDisplayY;
+  private float          lowDisplayX;
+  private float          lowDisplayY;
   private int            eventCounter;
 
   @Override
@@ -67,9 +68,11 @@ public class AccelerometerSimpleActivity extends Activity implements SensorEvent
       PowerManager.SCREEN_BRIGHT_WAKE_LOCK, getClass().getName());
     display = ((WindowManager)getSystemService(Context.WINDOW_SERVICE)).
       getDefaultDisplay();
+
     //Instantiate our simulation view and set it as the activity's content
-    simpleView = new SimpleView(this);
     setContentView(R.layout.activity_main);
+    if (savedInstanceState!= null && savedInstanceState.containsKey("VISIBILITY"))
+      setVisibility(savedInstanceState.getInt("VISIBILITY"));
   }
   @Override
   protected void onResume() {
@@ -99,67 +102,99 @@ public class AccelerometerSimpleActivity extends Activity implements SensorEvent
 
     eventCounter++;
     if (eventCounter == 40) {
-      eventCounter = 0;
-      highXEvent = 0;
-      highYEvent = 0;
+      highXEvent   = xEvent;
+      highYEvent   = yEvent;
+      lowXEvent    = xEvent;
+      lowYEvent    = yEvent;
     }
     ((TextView)findViewById(R.id.event_x)).setText(String.valueOf(xEvent));
     ((TextView)findViewById(R.id.event_y)).setText(String.valueOf(yEvent));
-    if (Math.abs(highXEvent) < Math.abs(xEvent))
+    if (highXEvent < xEvent)
       highXEvent = xEvent;
-    if (Math.abs(highYEvent) < Math.abs(yEvent))
+    if (highYEvent < yEvent)
       highYEvent = yEvent;
     ((TextView)findViewById(R.id.high_event_x)).setText(String.valueOf(highXEvent));
     ((TextView)findViewById(R.id.high_event_y)).setText(String.valueOf(highYEvent));
+    if (lowXEvent > xEvent)
+      lowXEvent = xEvent;
+    if (lowYEvent > yEvent)
+      lowYEvent = yEvent;
+    ((TextView)findViewById(R.id.low_event_x)).setText(String.valueOf(lowXEvent));
+    ((TextView)findViewById(R.id.low_event_y)).setText(String.valueOf(lowYEvent));
 
-    Float userX = 0f;
-    Float userY = 0f;
+    // Below here is for locking display orientation only.
+    Float displayX = 0f;
+    Float displayY = 0f;
     switch (display.getRotation()) {
       case Surface.ROTATION_0:
-        Log.i("ATAG", "ROTATION_0)");
-        userX = xEvent;
-        userY = yEvent;
+        displayX = xEvent;
+        displayY = yEvent;
         break;
       case Surface.ROTATION_90:
-        Log.i("ATAG", "ROTATION_90)");
-        userX = -yEvent;
-        userY =  xEvent;
+        displayX = -yEvent;
+        displayY =  xEvent;
         break;
       case Surface.ROTATION_180:
-        Log.i("ATAG", "ROTATION_180)");
-        userX = -xEvent;
-        userY = -yEvent;
+        displayX = -xEvent;
+        displayY = -yEvent;
         break;
       case Surface.ROTATION_270:
-        Log.i("ATAG", "ROTATION_270)");
-        userX =  yEvent;
-        userY = -xEvent;
+        displayX =  yEvent;
+        displayY = -xEvent;
         break;
     }
-    
-    if (Math.abs(highScreenX) < Math.abs(userX))
-      highScreenX = xEvent;
-    if (Math.abs(highScreenY) < Math.abs(userY))
-      highScreenY = yEvent;
-    ((TextView)findViewById(R.id.screen_x)).setText(String.valueOf(userX));
-    ((TextView)findViewById(R.id.screen_y)).setText(String.valueOf(userY));
-    ((TextView)findViewById(R.id.high_screen_x)).setText(String.valueOf(highScreenX));
-    ((TextView)findViewById(R.id.high_screen_y)).setText(String.valueOf(highScreenY));
-
+    if (eventCounter == 40) {
+      highDisplayX = displayX;
+      highDisplayY = displayY;
+      lowDisplayX  = displayX;
+      lowDisplayY  = displayY;
+      eventCounter = 0;
+    }
+    ((TextView)findViewById(R.id.screen_x)).setText(String.valueOf(displayX));
+    ((TextView)findViewById(R.id.screen_y)).setText(String.valueOf(displayY));
+    if (highDisplayX < displayX)
+      highDisplayX = displayX;
+    if (highDisplayY < displayY)
+      highDisplayY = displayY;
+    ((TextView)findViewById(R.id.high_screen_x)).setText(String.valueOf(highDisplayX));
+    ((TextView)findViewById(R.id.high_screen_y)).setText(String.valueOf(highDisplayY));
+    if (lowDisplayX > displayX)
+      lowDisplayX = displayX;
+    if (lowDisplayY > displayY)
+      lowDisplayY = displayY;
+    ((TextView)findViewById(R.id.low_screen_x)).setText(String.valueOf(lowDisplayX));
+    ((TextView)findViewById(R.id.low_screen_y)).setText(String.valueOf(lowDisplayY));
   }
 
   public void onShowScreenValues(View view) {
     View screenValues = findViewById(R.id.screen_values);
     int visibility = screenValues.getVisibility();
+    if (visibility == View.VISIBLE)
+      setVisibility(View.GONE);
+    else
+      setVisibility(View.VISIBLE);
+  }
+
+  private void setVisibility (int visibility) {
+    View screenValues = findViewById(R.id.screen_values);
+    View edgeDisplayValues = findViewById(R.id.edgeevent);
     if (visibility == View.VISIBLE) {
-      screenValues.setVisibility(View.INVISIBLE);
+      screenValues.setVisibility(View.VISIBLE);
+      edgeDisplayValues.setVisibility(View.GONE);
     }
     else {
-      screenValues.setVisibility(View.VISIBLE);
+      screenValues.setVisibility(View.GONE);
+      edgeDisplayValues.setVisibility(View.VISIBLE);
     }
   }
 
   @Override
   public void onAccuracyChanged(Sensor sensor, int accuracy) {}
 
+  @Override
+  public void onSaveInstanceState(Bundle savedInstanceState) {
+    super.onSaveInstanceState(savedInstanceState);
+    savedInstanceState.putInt("VISIBILITY",
+      findViewById(R.id.screen_values).getVisibility());
+  }
 }
